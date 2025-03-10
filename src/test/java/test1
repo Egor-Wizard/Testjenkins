@@ -1,0 +1,36 @@
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class GamePortfolioTests {
+
+    @Test
+    void testPageTitle() {
+        String expectedTitle = "Game Portfolio";
+        String actualTitle = getPageTitle(); // Метод, що отримує заголовок сторінки
+        assertEquals(expectedTitle, actualTitle, "Заголовок сторінки має бути 'Game Portfolio'");
+    }
+
+    @Test
+    void testGameListNotEmpty() {
+        assertFalse(getGameList().isEmpty(), "Список ігор не повинен бути порожнім");
+    }
+
+    @Test
+    void testGameDetailsLoad() {
+        String gameId = "game123"; // Припустимо, що це існуючий ID гри
+        assertNotNull(getGameDetails(gameId), "Деталі гри повинні завантажуватись коректно");
+    }
+
+    // Фіктивні методи для прикладу (в реальному тестуванні тут буде взаємодія з сайтом)
+    private String getPageTitle() {
+        return "Game Portfolio";
+    }
+
+    private java.util.List<String> getGameList() {
+        return java.util.Arrays.asList("Game1", "Game2", "Game3");
+    }
+
+    private String getGameDetails(String gameId) {
+        return gameId.equals("game123") ? "Game Details" : null;
+    }
+}
