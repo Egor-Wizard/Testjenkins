@@ -1,0 +1,39 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.interactions.Actions;
+
+public class GamePortfolioTest {
+    public static void main(String[] args) {
+        // Установите путь к вашему драйверу ChromeDriver
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        WebDriver driver = new ChromeDriver();
+        Actions actions = new Actions(driver);
+
+        try {
+            // 1. Открыть страницу
+            driver.get("https://alexmegua.github.io/game-portfolio/");
+
+            // 2. Установить размер окна 1053x816
+            driver.manage().window().setSize(new Dimension(1053, 816));
+
+            // 3. Найти и кликнуть по ссылке с текстом "Головна"
+            WebElement mainLink = driver.findElement(By.linkText("Головна"));
+            mainLink.click();
+
+            // 4. Навести курсор на ссылку "Головна"
+            actions.moveToElement(mainLink).perform();
+
+            // 5. Убрать курсор с ссылки "Головна"
+            actions.moveToElement(mainLink).moveByOffset(-100, -100).perform();
+
+            System.out.println("Test completed successfully");
+        } finally {
+            // Закрыть браузер после выполнения теста
+            driver.quit();
+        }
+    }
+}
