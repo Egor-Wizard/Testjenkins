@@ -1,0 +1,70 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.interactions.Actions;
+
+public class GamePortfolioTest {
+    public static void main(String[] args) {
+        // Установіть шлях до вашого драйвера ChromeDriver
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        WebDriver driver = new ChromeDriver();
+        Actions actions = new Actions(driver);
+
+        try {
+            // 1. Відкрити сторінку
+            driver.get("https://alexmegua.github.io/");
+
+            // 2. Встановити розмір вікна 1053x816
+            driver.manage().window().setSize(new Dimension(1053, 816));
+
+            // 3. Клікнути на посилання з текстом "Головна"
+            WebElement mainLink = driver.findElement(By.linkText("Головна"));
+            mainLink.click();
+
+            // 4. Клікнути на посилання з текстом "Про гру"
+            WebElement aboutGameLink = driver.findElement(By.linkText("Про гру"));
+            aboutGameLink.click();
+
+            // 5. Навести курсор на посилання "Про гру"
+            actions.moveToElement(aboutGameLink).perform();
+
+            // 6. Прибрати курсор з посилання "Про гру"
+            actions.moveToElement(aboutGameLink).moveByOffset(-100, -100).perform();
+
+            // 7. Клікнути на посилання з текстом "Галерея"
+            WebElement galleryLink = driver.findElement(By.linkText("Галерея"));
+            galleryLink.click();
+
+            // 8. Навести курсор на посилання "Галерея"
+            actions.moveToElement(galleryLink).perform();
+
+            // 9. Прибрати курсор з посилання "Галерея"
+            actions.moveToElement(galleryLink).moveByOffset(-100, -100).perform();
+
+            // 10-15. Клікнути на елемент з CSS селектором ".slick-next" кілька разів
+            WebElement slickNext = driver.findElement(By.cssSelector(".slick-next"));
+            for (int i = 0; i < 5; i++) {
+                slickNext.click();
+            }
+
+            // 16. Подвійний клік на елемент з CSS селектором ".slick-next"
+            actions.doubleClick(slickNext).perform();
+
+            // 17. Клікнути на елемент з CSS селектором "li:nth-child(3) > button"
+            WebElement thirdButton = driver.findElement(By.cssSelector("li:nth-child(3) > button"));
+            thirdButton.click();
+
+            // 18. Клікнути на елемент з CSS селектором ".slick-active > button"
+            WebElement activeButton = driver.findElement(By.cssSelector(".slick-active > button"));
+            activeButton.click();
+
+            System.out.println("Test completed successfully");
+        } finally {
+            // Закрити браузер після виконання тесту
+            driver.quit();
+        }
+    }
+}
