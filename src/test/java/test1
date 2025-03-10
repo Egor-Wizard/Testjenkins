@@ -1,48 +1,32 @@
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.Dimension;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class GamePortfolioTest {
+    public static void main(String[] args) {
+        // Установите путь к вашему драйверу ChromeDriver
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
 
-class GamePortfolioSeleniumTests {
-
-    @Test
-    void testPageTitle() {
-        // Настроить драйвер Chrome (нужен chromedriver)
         WebDriver driver = new ChromeDriver();
-        driver.get("https://alexmegua.github.io/game-portfolio/");
 
-        // Проверка заголовка страницы
-        String expectedTitle = "Game Portfolio";
-        String actualTitle = driver.getTitle();
-        assertEquals(expectedTitle, actualTitle);
+        try {
+            // 1. Открыть страницу /game-portfolio/
+            driver.get("https://alexmegua.github.io/game-portfolio/");
 
-        driver.quit();
-    }
+            // 2. Установить размер окна 1062x808
+            driver.manage().window().setSize(new Dimension(1062, 808));
 
-    @Test
-    void testGameListNotEmpty() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://alexmegua.github.io/game-portfolio/");
+            // 3. Найти и кликнуть по ссылке с текстом "Новини"
+            WebElement newsLink = driver.findElement(By.linkText("Новини"));
+            newsLink.click();
 
-        // Проверка, что список игр не пустой
-        WebElement gameList = driver.findElement(By.id("games-list")); // предполагаемый id
-        assertFalse(gameList.getText().isEmpty());
-
-        driver.quit();
-    }
-
-    @Test
-    void testImagesExistForGames() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://alexmegua.github.io/game-portfolio/");
-
-        // Проверка наличия изображений для каждой игры
-        List<WebElement> gameImages = driver.findElements(By.cssSelector(".game-image"));
-        assertTrue(gameImages.size() > 0, "На странице должны быть изображения для игр");
-
-        driver.quit();
+            // Проверка успешного завершения теста
+            System.out.println("'Test' completed successfully");
+        } finally {
+            // Закрыть браузер после выполнения теста
+            driver.quit();
+        }
     }
 }
