@@ -21,7 +21,20 @@ class GamePortfolioTests {
         assertNotNull(getGameDetails(gameId), "Деталі гри повинні завантажуватись коректно");
     }
 
-    // Фіктивні методи для прикладу (в реальному тестуванні тут буде взаємодія з сайтом)
+    @Test
+    void testImagesExistForGames() {
+        // Перевірка, чи є зображення для кожної гри
+        for (String game : getGameList()) {
+            assertTrue(isImagePresent(game), "Для гри '" + game + "' повинно бути зображення.");
+        }
+    }
+
+    // Фіктивний метод для перевірки наявності зображення для кожної гри (у реальному тестуванні буде перевірка елементів на веб-сторінці)
+    private boolean isImagePresent(String game) {
+        // Для реального тестування можна використовувати Selenium, щоб перевірити наявність тегу <img> для кожної гри
+        return true; // Припустимо, що зображення для кожної гри присутнє
+    }
+
     private String getPageTitle() {
         return "Game Portfolio";
     }
