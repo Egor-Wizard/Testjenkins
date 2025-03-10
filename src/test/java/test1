@@ -1,49 +1,48 @@
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
-class GamePortfolioTests {
+import static org.junit.jupiter.api.Assertions.*;
+
+class GamePortfolioSeleniumTests {
 
     @Test
     void testPageTitle() {
+        // Настроить драйвер Chrome (нужен chromedriver)
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://alexmegua.github.io/game-portfolio/");
+
+        // Проверка заголовка страницы
         String expectedTitle = "Game Portfolio";
-        String actualTitle = getPageTitle(); // Метод, що отримує заголовок сторінки
-        assertEquals(expectedTitle, actualTitle, "Заголовок сторінки має бути 'Game Portfolio'");
+        String actualTitle = driver.getTitle();
+        assertEquals(expectedTitle, actualTitle);
+
+        driver.quit();
     }
 
     @Test
     void testGameListNotEmpty() {
-        assertFalse(getGameList().isEmpty(), "Список ігор не повинен бути порожнім");
-    }
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://alexmegua.github.io/game-portfolio/");
 
-    @Test
-    void testGameDetailsLoad() {
-        String gameId = "game123"; // Припустимо, що це існуючий ID гри
-        assertNotNull(getGameDetails(gameId), "Деталі гри повинні завантажуватись коректно");
+        // Проверка, что список игр не пустой
+        WebElement gameList = driver.findElement(By.id("games-list")); // предполагаемый id
+        assertFalse(gameList.getText().isEmpty());
+
+        driver.quit();
     }
 
     @Test
     void testImagesExistForGames() {
-        // Перевірка, чи є зображення для кожної гри
-        for (String game : getGameList()) {
-            assertTrue(isImagePresent(game), "Для гри '" + game + "' повинно бути зображення.");
-        }
-    }
+        WebDriver driver = new ChromeDriver();
+        driver.get("https://alexmegua.github.io/game-portfolio/");
 
-    // Фіктивний метод для перевірки наявності зображення для кожної гри (у реальному тестуванні буде перевірка елементів на веб-сторінці)
-    private boolean isImagePresent(String game) {
-        // Для реального тестування можна використовувати Selenium, щоб перевірити наявність тегу <img> для кожної гри
-        return true; // Припустимо, що зображення для кожної гри присутнє
-    }
+        // Проверка наличия изображений для каждой игры
+        List<WebElement> gameImages = driver.findElements(By.cssSelector(".game-image"));
+        assertTrue(gameImages.size() > 0, "На странице должны быть изображения для игр");
 
-    private String getPageTitle() {
-        return "Game Portfolio";
-    }
-
-    private java.util.List<String> getGameList() {
-        return java.util.Arrays.asList("Game1", "Game2", "Game3");
-    }
-
-    private String getGameDetails(String gameId) {
-        return gameId.equals("game123") ? "Game Details" : null;
+        driver.quit();
     }
 }
